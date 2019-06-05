@@ -9,7 +9,7 @@ const connection = mysql.createConnection(dbconfig);
 
 router.route('/')
     .get((req, res) => {
-        if (req.params.uid) {
+        if (req.query.uid) {
             connection.query('SELECT * FROM users WHERE uid = ?', [req.params.uid], (err, rows, fields) => {
                 if (!err) {
                     res.send(rows);
@@ -55,7 +55,7 @@ router.route('/')
                 }
             });
         }*/
-        res.send(req.params);
+        res.send(req.query);
     })
     /**
      * 회원가입
