@@ -55,7 +55,6 @@ router.route('/')
                 }
             });
         }*/
-        res.send(req.query);
     })
     /**
      * 회원가입
