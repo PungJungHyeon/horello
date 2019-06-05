@@ -8,46 +8,113 @@ const connection = mysql.createConnection(dbconfig);
 
 
 router.route('/')
-.get((req, res) => {
-    connection.query('SELECT * FROM Users', (err, rows, fields) => {
-        if(!err){
-            res.send(rows);
-        }else{
-            res.send(err);
+    .get((req, res) => {
+        if (req.params.uid != null) {
+            connection.query('SELECT * FROM users WHERE uid = ?', [req.params.uid], (err, rows, fields) => {
+                if (!err) {
+                    res.send(rows);
+                } else {
+                    res.send(err);
+                }
+            });
         }
-    });
-})
-.post((req,res) => {
-    connection.query(
-        'INSERT INTO Users(uemail, upassword, uname, usex) VALUES(?, ?, ?, ?)', 
-        [req.body.uemail, req.body.upassword, req.body.uname, req.body.usex]
-        , (err, rows, fields) => {
-            if(!err){
-                res.send(rows);
-            }else{
-                res.send(err);
+        if (req.params.uemail != null) {
+            connection.query('SELECT * FROM users WHERE uemail like ?', [req.params.uemail], (err, rows, fields) => {
+                if (!err) {
+                    res.send(rows);
+                } else {
+                    res.send(err);
+                }
+            });
+        }
+        if (req.params.uname != null) {
+            connection.query('SELECT * FROM users', [req.params.uname], (err, rows, fields) => {
+                if (!err) {
+                    res.send(rows);
+                } else {
+                    res.send(err);
+                }
+            });
+        }
+        if (req.params.pid != null) {
+            connection.query('SELECT * FROM users WHERE uid in (SELECT uid FROM user_in_project WHERE pid = ?)', [req.params.pid], (err, rows, field) => {
+                if(!err) {
+                    res.send(rows);
+                }else{
+                    res.send(err);
+                }
+            });
+        }
+        if(req.params.crid != null) {
+            connection.query('SELECT * FROM users WHERE uid in (SELECT uid FROM user_in_chatrooms WHERE crid = ?' [req.params.crid], (err, rows, field) => {
+                if(!err){
+                    res.send(rows);
+                }else{
+                    res.send(err);
+                }
+            });
+        }
+    })
+    /**
+     * 회원가입
+     * 
+     * body parmas
+     * uemail: 이메일
+     * upassword: 패스워드
+     * uname: 이름
+     * usex: 성별
+     * 
+     */
+    .post((req, res) => {
+        connection.query(
+            'INSERT INTO users(uemail, upassword, uname, usex) VALUES(?, ?, ?, ?)',
+            [req.body.uemail, req.body.upassword, req.body.uname, req.body.usex], (err, rows, fields) => {
+                if (!err) {
+                    res.send(rows);
+                } else {
+                    res.send(err);
+                }
             }
-        }
-    );
-});
-
+        );
+    })
+    /**
+     * 회원정보 수정
+     * body params
+     * uemail: 이메일
+     * upassword: 패스워드
+     * uname: 이름
+     * usex: 성별
+     */
+    .put(function (req, res) {
+        connection.query(
+            'UPDATE users SET uemail = ?, upassword = ?, uname = ?, usex = ? WHERE uid = ?',
+            [req.body.uemail, req.body.upassword, req.body.uname, req.body.usex], (err, rows, fields) => {
+                if (!err) {
+                    res.send(rows);
+                } else {
+                    res.send(err);
+                }
+            }
+        );
+    })
 router.route('/:id')
-.get(function(req, res){
-    let id = req.params.id;
-    connection.query('SELECT * FROM Users WHERE uid = ?', [id], (err, rows, fields) => {
-        res.send(rows);
+    /**
+    * 회원정보 삭제
+    * 
+    * body params
+    * uid: 사용자 ID 
+    */
+    .delete(function (req, res) {
+        connection.query(
+            'DELETE FROM users where uid = ?',
+            [req.params.id], (err, rows, fields) => {
+                if (!err) {
+                    res.send(rows);
+                } else {
+                    res.send(err);
+                }
+            }
+        );
     });
-})
-.put(function(req, res){
-    let row = connection.query(
-        'UPDATE Users SET uid = ?, uemail = ?, upassword = ?, uname = ?, usex = ? WHERE uid = ?',
-        [user.uid, user.uemail, user.upassword, user.uname, user.uname, user.uid]);
-    res.send(row);
-})
-.delete(function(req, res){
-    let id = req.body.id;
-    let row = connection.query('DELETE FROM Users WHERE uid = ?', [id]);
-    res.send(row);
-});
 
 module.exports = router;
