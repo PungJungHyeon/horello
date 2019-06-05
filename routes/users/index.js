@@ -10,7 +10,7 @@ const connection = mysql.createConnection(dbconfig);
 router.route('/')
     .get((req, res) => {
         if (req.query.uid) {
-            connection.query('SELECT * FROM users WHERE uid = ?', [req.params.uid], (err, rows, fields) => {
+            connection.query('SELECT * FROM users WHERE uid = ?', [req.query.uid], (err, rows, fields) => {
                 if (!err) {
                     res.send(rows);
                 } else {
@@ -18,9 +18,9 @@ router.route('/')
                 }
             });
         }
-        /*
-        else if (req.params.uemail) {
-            connection.query('SELECT * FROM users WHERE uemail like ?', [req.params.uemail], (err, rows, fields) => {
+        
+        else if (req.query.uemail) {
+            connection.query('SELECT * FROM users WHERE uemail like ?', [req.query.uemail], (err, rows, fields) => {
                 if (!err) {
                     res.send(rows);
                 } else {
@@ -28,8 +28,8 @@ router.route('/')
                 }
             });
         }
-        else if (req.params.uname) {
-            connection.query('SELECT * FROM users', [req.params.uname], (err, rows, fields) => {
+        else if (req.query.uname) {
+            connection.query('SELECT * FROM users', [req.query.uname], (err, rows, fields) => {
                 if (!err) {
                     res.send(rows);
                 } else {
@@ -37,8 +37,8 @@ router.route('/')
                 }
             });
         }
-        else if (req.params.pid) {
-            connection.query('SELECT * FROM users WHERE uid in (SELECT uid FROM user_in_project WHERE pid = ?)', [req.params.pid], (err, rows, field) => {
+        else if (req.query.pid) {
+            connection.query('SELECT * FROM users WHERE uid in (SELECT uid FROM user_in_project WHERE pid = ?)', [req.query.pid], (err, rows, field) => {
                 if(!err) {
                     res.send(rows);
                 }else{
@@ -46,15 +46,15 @@ router.route('/')
                 }
             });
         }
-        else if(req.params.crid) {
-            connection.query('SELECT * FROM users WHERE uid in (SELECT uid FROM user_in_chatrooms WHERE crid = ?' [req.params.crid], (err, rows, field) => {
+        else if(req.query.crid) {
+            connection.query('SELECT * FROM users WHERE uid in (SELECT uid FROM user_in_chatrooms WHERE crid = ?' [req.query.crid], (err, rows, field) => {
                 if(!err){
                     res.send(rows);
                 }else{
                     res.send(err);
                 }
             });
-        }*/
+        }
     })
     /**
      * 회원가입
