@@ -18,7 +18,7 @@ router.route('/')
                 }
             });
         }
-        if (req.params.uemail != null) {
+        else if (req.params.uemail != null) {
             connection.query('SELECT * FROM users WHERE uemail like ?', [req.params.uemail], (err, rows, fields) => {
                 if (!err) {
                     res.send(rows);
@@ -27,7 +27,7 @@ router.route('/')
                 }
             });
         }
-        if (req.params.uname != null) {
+        else if (req.params.uname != null) {
             connection.query('SELECT * FROM users', [req.params.uname], (err, rows, fields) => {
                 if (!err) {
                     res.send(rows);
@@ -36,7 +36,7 @@ router.route('/')
                 }
             });
         }
-        if (req.params.pid != null) {
+        else if (req.params.pid != null) {
             connection.query('SELECT * FROM users WHERE uid in (SELECT uid FROM user_in_project WHERE pid = ?)', [req.params.pid], (err, rows, field) => {
                 if(!err) {
                     res.send(rows);
@@ -45,7 +45,7 @@ router.route('/')
                 }
             });
         }
-        if(req.params.crid != null) {
+        else if(req.params.crid != null) {
             connection.query('SELECT * FROM users WHERE uid in (SELECT uid FROM user_in_chatrooms WHERE crid = ?' [req.params.crid], (err, rows, field) => {
                 if(!err){
                     res.send(rows);
