@@ -9,7 +9,7 @@ const connection = mysql.createConnection(dbconfig);
 
 router.route('/')
     .get((req, res) => {
-        /*if (req.params.uid) {
+        if (req.params.uid) {
             connection.query('SELECT * FROM users WHERE uid = ?', [req.params.uid], (err, rows, fields) => {
                 if (!err) {
                     res.send(rows);
@@ -18,6 +18,7 @@ router.route('/')
                 }
             });
         }
+        /*
         else if (req.params.uemail) {
             connection.query('SELECT * FROM users WHERE uemail like ?', [req.params.uemail], (err, rows, fields) => {
                 if (!err) {
