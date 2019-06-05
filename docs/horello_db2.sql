@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `horello`.`project` (
   `end_date` DATE NULL,
   `manager_id` INT NOT NULL,
   PRIMARY KEY (`pid`),
-  INDEX `fk_project_user1_idx` (`manager_id` ASC) VISIBLE,
+  INDEX `fk_project_user1_idx` (`manager_id` ASC),
   CONSTRAINT `fk_project_user1`
     FOREIGN KEY (`manager_id`)
     REFERENCES `horello`.`user` (`uid`)
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `horello`.`task` (
   `end_date` DATE NULL,
   `project_pid` INT NOT NULL,
   PRIMARY KEY (`tid`),
-  INDEX `fk_task_project1_idx` (`project_pid` ASC) VISIBLE,
+  INDEX `fk_task_project1_idx` (`project_pid` ASC),
   CONSTRAINT `fk_task_project1`
     FOREIGN KEY (`project_pid`)
     REFERENCES `horello`.`project` (`pid`)
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `horello`.`chatroom` (
   `crname` VARCHAR(45) NULL,
   `project_pid` INT NOT NULL,
   PRIMARY KEY (`crid`),
-  INDEX `fk_chatroom_project1_idx` (`project_pid` ASC) VISIBLE,
+  INDEX `fk_chatroom_project1_idx` (`project_pid` ASC),
   CONSTRAINT `fk_chatroom_project1`
     FOREIGN KEY (`project_pid`)
     REFERENCES `horello`.`project` (`pid`)
@@ -94,8 +94,8 @@ CREATE TABLE IF NOT EXISTS `horello`.`chat` (
   `chatroom_crid` INT NOT NULL,
   `user_uid` INT NOT NULL,
   PRIMARY KEY (`chid`),
-  INDEX `fk_chat_chatroom1_idx` (`chatroom_crid` ASC) VISIBLE,
-  INDEX `fk_chat_user1_idx` (`user_uid` ASC) VISIBLE,
+  INDEX `fk_chat_chatroom1_idx` (`chatroom_crid` ASC),
+  INDEX `fk_chat_user1_idx` (`user_uid` ASC),
   CONSTRAINT `fk_chat_chatroom1`
     FOREIGN KEY (`chatroom_crid`)
     REFERENCES `horello`.`chatroom` (`crid`)
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `horello`.`file` (
   `furl` VARCHAR(50) NULL,
   `project_pid` INT NOT NULL,
   PRIMARY KEY (`fid`),
-  INDEX `fk_file_project_idx` (`project_pid` ASC) VISIBLE,
+  INDEX `fk_file_project_idx` (`project_pid` ASC),
   CONSTRAINT `fk_file_project`
     FOREIGN KEY (`project_pid`)
     REFERENCES `horello`.`project` (`pid`)
@@ -135,8 +135,8 @@ CREATE TABLE IF NOT EXISTS `horello`.`user_in_project` (
   `uid` INT NOT NULL,
   `pid` INT NOT NULL,
   PRIMARY KEY (`uid`, `pid`),
-  INDEX `fk_user_has_project_project1_idx` (`pid` ASC) VISIBLE,
-  INDEX `fk_user_has_project_user1_idx` (`uid` ASC) VISIBLE,
+  INDEX `fk_user_has_project_project1_idx` (`pid` ASC),
+  INDEX `fk_user_has_project_user1_idx` (`uid` ASC),
   CONSTRAINT `fk_user_has_project_user1`
     FOREIGN KEY (`uid`)
     REFERENCES `horello`.`user` (`uid`)
@@ -157,8 +157,8 @@ CREATE TABLE IF NOT EXISTS `horello`.`user_in_chatroom` (
   `uid` INT NOT NULL,
   `crid` INT NOT NULL,
   PRIMARY KEY (`uid`, `crid`),
-  INDEX `fk_user_has_chatroom_chatroom1_idx` (`crid` ASC) VISIBLE,
-  INDEX `fk_user_has_chatroom_user1_idx` (`uid` ASC) VISIBLE,
+  INDEX `fk_user_has_chatroom_chatroom1_idx` (`crid` ASC),
+  INDEX `fk_user_has_chatroom_user1_idx` (`uid` ASC),
   CONSTRAINT `fk_user_has_chatroom_user1`
     FOREIGN KEY (`uid`)
     REFERENCES `horello`.`user` (`uid`)
