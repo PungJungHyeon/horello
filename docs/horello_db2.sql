@@ -40,10 +40,10 @@ CREATE TABLE IF NOT EXISTS `horello`.`projects` (
   `end_date` DATE NULL,
   `manager_id` INT NOT NULL,
   PRIMARY KEY (`pid`),
-  INDEX `fk_project_user1_idx` (`manager_id` ASC),
-  CONSTRAINT `fk_project_user1`
+  INDEX `fk_project_users1_idx` (`manager_id` ASC),
+  CONSTRAINT `fk_project_users1`
     FOREIGN KEY (`manager_id`)
-    REFERENCES `horello`.`user` (`uid`)
+    REFERENCES `horello`.`users` (`uid`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -59,10 +59,10 @@ CREATE TABLE IF NOT EXISTS `horello`.`tasks` (
   `end_date` DATE NULL,
   `project_pid` INT NOT NULL,
   PRIMARY KEY (`tid`),
-  INDEX `fk_task_project1_idx` (`project_pid` ASC),
-  CONSTRAINT `fk_task_project1`
+  INDEX `fk_tasks_project1_idx` (`project_pid` ASC),
+  CONSTRAINT `fk_tasks_project1`
     FOREIGN KEY (`project_pid`)
-    REFERENCES `horello`.`project` (`pid`)
+    REFERENCES `horello`.`projects` (`pid`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -76,10 +76,10 @@ CREATE TABLE IF NOT EXISTS `horello`.`chatrooms` (
   `crname` VARCHAR(45) NULL,
   `project_pid` INT NOT NULL,
   PRIMARY KEY (`crid`),
-  INDEX `fk_chatroom_project1_idx` (`project_pid` ASC),
-  CONSTRAINT `fk_chatroom_project1`
+  INDEX `fk_chatrooms_project1_idx` (`project_pid` ASC),
+  CONSTRAINT `fk_chatrooms_project1`
     FOREIGN KEY (`project_pid`)
-    REFERENCES `horello`.`project` (`pid`)
+    REFERENCES `horello`.`projects` (`pid`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -94,16 +94,16 @@ CREATE TABLE IF NOT EXISTS `horello`.`chats` (
   `chatroom_crid` INT NOT NULL,
   `user_uid` INT NOT NULL,
   PRIMARY KEY (`chid`),
-  INDEX `fk_chat_chatroom1_idx` (`chatroom_crid` ASC),
-  INDEX `fk_chat_user1_idx` (`user_uid` ASC),
-  CONSTRAINT `fk_chat_chatroom1`
+  INDEX `fk_chats_chatroom1_idx` (`chatroom_crid` ASC),
+  INDEX `fk_chats_user1_idx` (`user_uid` ASC),
+  CONSTRAINT `fk_chats_chatroom1`
     FOREIGN KEY (`chatroom_crid`)
-    REFERENCES `horello`.`chatroom` (`crid`)
+    REFERENCES `horello`.`chatrooms` (`crid`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_chat_user1`
+  CONSTRAINT `fk_chats_user1`
     FOREIGN KEY (`user_uid`)
-    REFERENCES `horello`.`user` (`uid`)
+    REFERENCES `horello`.`users` (`uid`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `horello`.`files` (
   INDEX `fk_file_project_idx` (`project_pid` ASC),
   CONSTRAINT `fk_file_project`
     FOREIGN KEY (`project_pid`)
-    REFERENCES `horello`.`project` (`pid`)
+    REFERENCES `horello`.`projects` (`pid`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -139,12 +139,12 @@ CREATE TABLE IF NOT EXISTS `horello`.`user_in_projects` (
   INDEX `fk_user_has_project_user1_idx` (`uid` ASC),
   CONSTRAINT `fk_user_has_project_user1`
     FOREIGN KEY (`uid`)
-    REFERENCES `horello`.`user` (`uid`)
+    REFERENCES `horello`.`users` (`uid`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_has_project_project1`
     FOREIGN KEY (`pid`)
-    REFERENCES `horello`.`project` (`pid`)
+    REFERENCES `horello`.`projects` (`pid`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -161,12 +161,12 @@ CREATE TABLE IF NOT EXISTS `horello`.`user_in_chatrooms` (
   INDEX `fk_user_has_chatroom_user1_idx` (`uid` ASC),
   CONSTRAINT `fk_user_has_chatroom_user1`
     FOREIGN KEY (`uid`)
-    REFERENCES `horello`.`user` (`uid`)
+    REFERENCES `horello`.`users` (`uid`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_has_chatroom_chatroom1`
     FOREIGN KEY (`crid`)
-    REFERENCES `horello`.`chatroom` (`crid`)
+    REFERENCES `horello`.`chatrooms` (`crid`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
