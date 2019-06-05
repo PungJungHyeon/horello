@@ -18,9 +18,9 @@ CREATE SCHEMA IF NOT EXISTS `horello` DEFAULT CHARACTER SET utf8 COLLATE utf8_un
 USE `horello` ;
 
 -- -----------------------------------------------------
--- Table `horello`.`user`
+-- Table `horello`.`users`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `horello`.`user` (
+CREATE TABLE IF NOT EXISTS `horello`.`users` (
   `uid` INT NOT NULL AUTO_INCREMENT,
   `uemail` VARCHAR(50) NULL,
   `upassword` VARCHAR(12) NULL,
@@ -31,9 +31,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `horello`.`project`
+-- Table `horello`.`projects`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `horello`.`project` (
+CREATE TABLE IF NOT EXISTS `horello`.`projects` (
   `pid` INT NOT NULL AUTO_INCREMENT,
   `pname` VARCHAR(30) NULL,
   `start_date` DATE NULL,
@@ -50,9 +50,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `horello`.`task`
+-- Table `horello`.`tasks`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `horello`.`task` (
+CREATE TABLE IF NOT EXISTS `horello`.`tasks` (
   `tid` INT NOT NULL AUTO_INCREMENT,
   `tname` VARCHAR(45) NULL,
   `start_date` DATE NULL,
@@ -69,9 +69,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `horello`.`chatroom`
+-- Table `horello`.`chatrooms`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `horello`.`chatroom` (
+CREATE TABLE IF NOT EXISTS `horello`.`chatrooms` (
   `crid` INT NOT NULL AUTO_INCREMENT,
   `crname` VARCHAR(45) NULL,
   `project_pid` INT NOT NULL,
@@ -86,9 +86,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `horello`.`chat`
+-- Table `horello`.`chats`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `horello`.`chat` (
+CREATE TABLE IF NOT EXISTS `horello`.`chats` (
   `chid` INT NOT NULL,
   `chcontent` VARCHAR(50) NULL,
   `chatroom_crid` INT NOT NULL,
@@ -110,9 +110,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `horello`.`file`
+-- Table `horello`.`files`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `horello`.`file` (
+CREATE TABLE IF NOT EXISTS `horello`.`files` (
   `fid` INT NOT NULL AUTO_INCREMENT,
   `fname` VARCHAR(50) NULL,
   `fpath` VARCHAR(50) NULL,
@@ -129,9 +129,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `horello`.`user_in_project`
+-- Table `horello`.`user_in_projects`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `horello`.`user_in_project` (
+CREATE TABLE IF NOT EXISTS `horello`.`user_in_projects` (
   `uid` INT NOT NULL,
   `pid` INT NOT NULL,
   PRIMARY KEY (`uid`, `pid`),
@@ -151,9 +151,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `horello`.`user_in_chatroom`
+-- Table `horello`.`user_in_chatrooms`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `horello`.`user_in_chatroom` (
+CREATE TABLE IF NOT EXISTS `horello`.`user_in_chatrooms` (
   `uid` INT NOT NULL,
   `crid` INT NOT NULL,
   PRIMARY KEY (`uid`, `crid`),
