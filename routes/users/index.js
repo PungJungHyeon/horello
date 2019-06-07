@@ -55,7 +55,7 @@ router.route('/')
                 }
             });
         }else{
-            connection.query('SELECT * FROM users' [req.query.crid], (err, rows, fields) => {
+            connection.query('SELECT * FROM users', (err, rows, fields) => {
                 if(!err){
                     res.send(rows);
                 }else{
