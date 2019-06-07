@@ -60,7 +60,7 @@ router.route('/')
     .post((req, res) => {
         connection.query(
             'INSERT INTO projects(pname, start_date, end_date, manager_id) VALUES(?, ?, ?, ?)',
-            [req.body.pname, req.body.start_date, req.body.end_date, req.body.manager_id], (err, , fields) => {
+            [req.body.pname, req.body.start_date, req.body.end_date, req.body.manager_id], (err, rows, fields) => {
                 if (!err) {
                     res.send(rows.insertId);
                     /*connection.query('INSERT INTO user_in_projects(uid, pid) VALUES(?, ?)',
