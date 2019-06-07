@@ -9,8 +9,8 @@ const connection = mysql.createConnection(dbconfig);
 
 router.route('/')
     .get((req, res) => {
-        if (req.query.uid) {
-            connection.query('SELECT * FROM users WHERE uid = ?', [req.query.uid], (err, rows, fields) => {
+        if (req.query.pid) {
+            connection.query('SELECT * FROM projects WHERE pid = ?', [req.query.pid], (err, rows, fields) => {
                 if (!err) {
                     res.send(rows);
                 } else {
@@ -19,8 +19,8 @@ router.route('/')
             });
         }
         
-        else if (req.query.uemail) {
-            connection.query('SELECT * FROM users WHERE uemail like ?', [req.query.uemail], (err, rows, fields) => {
+        else if (req.query.pname) {
+            connection.query('SELECT * FROM projects WHERE pname like ?', [req.query.pname], (err, rows, fields) => {
                 if (!err) {
                     res.send(rows);
                 } else {
@@ -28,8 +28,8 @@ router.route('/')
                 }
             });
         }
-        else if (req.query.uname) {
-            connection.query('SELECT * FROM users', [req.query.uname], (err, rows, fields) => {
+        else if (req.query.manager_id) {
+            connection.query('SELECT * FROM projects WHERE manager_id = ?', [req.query.manager_id], (err, rows, fields) => {
                 if (!err) {
                     res.send(rows);
                 } else {
@@ -37,23 +37,14 @@ router.route('/')
                 }
             });
         }
-        else if (req.query.pid) {
-            connection.query('SELECT * FROM users WHERE uid in (SELECT uid FROM user_in_project WHERE pid = ?)', [req.query.pid], (err, rows, fields) => {
+        else if(req.query.uid){
+            connection.query('SELECT * FROM projects WHERE pid IN (SELECT pid FROM user_in_projects WHERE uid = ?'[req.query.uid], (err, rows, field) => {
                 if(!err) {
                     res.send(rows);
-                }else{
+                }else {
                     res.send(err);
                 }
-            });
-        }
-        else if(req.query.crid) {
-            connection.query('SELECT * FROM users WHERE uid in (SELECT uid FROM user_in_chatrooms WHERE crid = ?' [req.query.crid], (err, rows, fields) => {
-                if(!err){
-                    res.send(rows);
-                }else{
-                    res.send(err);
-                }
-            });
+            })
         }
     })
     /**
@@ -68,8 +59,8 @@ router.route('/')
      */
     .post((req, res) => {
         connection.query(
-            'INSERT INTO users(uemail, upassword, uname, usex) VALUES(?, ?, ?, ?)',
-            [req.body.uemail, req.body.upassword, req.body.uname, req.body.usex], (err, rows, fields) => {
+            'INSERT INTO projects(pname, start_date, end_date, manager_id) VALUES(?, ?, ?, ?)',
+            [req.body.pname, req.body.start_date, req.body.end_date, req.body.manager_id], (err, rows, fields) => {
                 if (!err) {
                     res.send(rows);
                 } else {
@@ -88,8 +79,8 @@ router.route('/')
      */
     .put(function (req, res) {
         connection.query(
-            'UPDATE users SET uemail = ?, upassword = ?, uname = ?, usex = ? WHERE uid = ?',
-            [req.body.uemail, req.body.upassword, req.body.uname, req.body.usex], (err, rows, fields) => {
+            'UPDATE projects SET pname = ? WHERE pid = ?',
+            [req.body.pname, req.body.pid], (err, rows, fields) => {
                 if (!err) {
                     res.send(rows);
                 } else {
@@ -103,11 +94,11 @@ router.route('/:id')
     * 회원정보 삭제
     * 
     * body params
-    * uid: 사용자 ID 
+    * pid: 사용자 ID 
     */
     .delete(function (req, res) {
         connection.query(
-            'DELETE FROM users where uid = ?',
+            'DELETE FROM projects where pid = ?',
             [req.params.id], (err, rows, fields) => {
                 if (!err) {
                     res.send(rows);
