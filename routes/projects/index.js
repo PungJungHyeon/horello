@@ -70,7 +70,7 @@ router.route('/')
                         else {
                             res.send(err);
                         }
-                    });*/
+                    });
                 } else {
                     res.send(err);
                 }
