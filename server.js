@@ -6,6 +6,7 @@ const dbconfig = require('./config/database.js');
 const connection = mysql.createConnection(dbconfig);
 const app = express();
 const users = require('./routes/users');
+const projects = require('./routes/projects');
 
 app.set('port', process.env.PORT || 3000);
 app.use(bodyParser.urlencoded({extended: true}));
