@@ -54,6 +54,14 @@ router.route('/')
                     res.send(err);
                 }
             });
+        }else{
+            connection.query('SELECT * FROM users' [req.query.crid], (err, rows, fields) => {
+                if(!err){
+                    res.send(rows);
+                }else{
+                    res.send(err);
+                }
+            });
         }
     })
     /**
