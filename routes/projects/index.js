@@ -38,7 +38,7 @@ router.route('/')
             });
         }
         else if(req.query.uid){
-            connection.query('SELECT * FROM projects WHERE pid IN (SELECT pid FROM user_in_projects WHERE uid = ?'[req.query.uid], (err, rows, field) => {
+            connection.query('SELECT * FROM projects WHERE pid IN (SELECT pid FROM user_in_projects WHERE uid = ?', [req.query.uid], (err, rows, field) => {
                 if(!err) {
                     res.send(rows);
                 }else {

@@ -38,7 +38,7 @@ router.route('/')
             });
         }
         else if (req.query.pid) {
-            connection.query('SELECT * FROM users WHERE uid in (SELECT uid FROM user_in_project WHERE pid = ?)', [req.query.pid], (err, rows, fields) => {
+            connection.query('SELECT * FROM users WHERE uid in (SELECT uid FROM user_in_project WHERE pid = ?)', [req.query.pid], (err, rows, field) => {
                 if(!err) {
                     res.send(rows);
                 }else{
@@ -47,15 +47,7 @@ router.route('/')
             });
         }
         else if(req.query.crid) {
-            connection.query('SELECT * FROM users WHERE uid in (SELECT uid FROM user_in_chatrooms WHERE crid = ?' [req.query.crid], (err, rows, fields) => {
-                if(!err){
-                    res.send(rows);
-                }else{
-                    res.send(err);
-                }
-            });
-        }else{
-            connection.query('SELECT * FROM users', (err, rows, fields) => {
+            connection.query('SELECT * FROM users WHERE uid in (SELECT uid FROM user_in_chatrooms WHERE crid = ?' [req.query.crid], (err, rows, field) => {
                 if(!err){
                     res.send(rows);
                 }else{
