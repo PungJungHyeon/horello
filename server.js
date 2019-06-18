@@ -7,7 +7,7 @@ const connection = mysql.createConnection(dbconfig);
 const app = express();
 const users = require('./routes/users');
 const projects = require('./routes/projects');
-
+const tasks = require('./routes/tasks');
 app.set('port', process.env.PORT || 3000);
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
