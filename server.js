@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use('/users', users);
 app.use('/projects', projects);
-
+app.use('/tasks', tasks);
 app.get('/', function(req, res, next){
     res.send('Hello, world!');
 });
