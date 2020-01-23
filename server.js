@@ -22,3 +22,4 @@ app.post('/', (req, res, next) => {
     res.send(req.body.uname);
 });
 app.listen(app.get('port'));
+print('dkdk');
